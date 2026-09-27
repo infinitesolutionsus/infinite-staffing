@@ -1,0 +1,223 @@
+import { Form, Head } from '@inertiajs/react';
+import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { store } from '@/actions/App/Http/Controllers/ContactController';
+import { buttonLinkVariants } from '@/components/site/button-link';
+import Container from '@/components/site/container';
+import FormField, { inputClassName } from '@/components/site/form-field';
+import FormSuccess from '@/components/site/form-success';
+import PageHero from '@/components/site/page-hero';
+import { Spinner } from '@/components/ui/spinner';
+import { company } from '@/lib/site';
+
+type ContactProps = {
+    topics: { value: string; label: string }[];
+    selectedTopic: string;
+};
+
+const contactMethods = [
+    {
+        label: 'Call us',
+        value: company.phone,
+        href: company.phoneHref,
+        icon: Phone,
+    },
+    {
+        label: 'Email us',
+        value: company.email,
+        href: `mailto:${company.email}`,
+        icon: Mail,
+    },
+    {
+        label: 'Visit us',
+        value: company.addressLines.join(', '),
+        href: company.mapUrl,
+        icon: MapPin,
+    },
+];
+
+export default function Contact({ topics, selectedTopic }: ContactProps) {
+    return (
+        <>
+            <Head title="Contact Us">
+                <meta
+                    name="description"
+                    content="Contact Infinite Staffing Solutions about radiology staffing, the CT certification program, consulting or healthcare advocacy."
+                />
+            </Head>
+
+            <PageHero
+                eyebrow="Contact us"
+                title="We’d love to hear from you"
+                description="Whether you’re a facility looking for skilled technologists or consulting services, a technologist interested in joining our team, curious about continued education, or interested in our healthcare advocacy program — our team is ready to help."
+            />
+
+            <section className="bg-slate-50 py-20 sm:py-24">
+                <Container className="grid gap-10 lg:grid-cols-12">
+                    <div className="grid content-start gap-4 lg:col-span-4">
+                        {contactMethods.map((method) => (
+                            <a
+                                key={method.label}
+                                href={method.href}
+                                target={
+                                    method.icon === MapPin
+                                        ? '_blank'
+                                        : undefined
+                                }
+                                rel="noreferrer"
+                                className="group flex gap-4 rounded-3xl border border-slate-200 bg-white p-6 transition hover:border-brand-300 hover:shadow-lg hover:shadow-brand-500/5"
+                            >
+                                <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 transition group-hover:bg-brand-500 group-hover:text-white">
+                                    <method.icon className="size-5" />
+                                </div>
+                                <div className="min-w-0">
+                                    <p className="text-sm text-slate-500">
+                                        {method.label}
+                                    </p>
+                                    <p className="mt-1 font-semibold break-words text-navy-950">
+                                        {method.value}
+                                    </p>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+
+                    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xl shadow-navy-950/5 sm:p-10 lg:col-span-8">
+                        <h2 className="font-display text-2xl font-bold text-navy-950">
+                            Get in touch
+                        </h2>
+                        <p className="mt-2 text-slate-600">
+                            Fill out the form below and we&rsquo;ll get back to
+                            you promptly.
+                        </p>
+
+                        <Form
+                            {...store.form()}
+                            resetOnSuccess
+                            options={{ preserveScroll: true }}
+                            className="mt-8 grid gap-6 sm:grid-cols-2"
+                        >
+                            {({ errors, processing, wasSuccessful }) => (
+                                <>
+                                    {wasSuccessful && (
+                                        <div className="sm:col-span-2">
+                                            <FormSuccess
+                                                title="Message sent"
+                                                message="Thanks for reaching out! A member of our team will be in touch shortly."
+                                            />
+                                        </div>
+                                    )}
+
+                                    <FormField
+                                        label="Your name"
+                                        htmlFor="name"
+                                        required
+                                        error={errors.name}
+                                    >
+                                        <input
+                                            id="name"
+                                            name="name"
+                                            autoComplete="name"
+                                            required
+                                            aria-invalid={!!errors.name}
+                                            className={inputClassName}
+                                        />
+                                    </FormField>
+
+                                    <FormField
+                                        label="Email address"
+                                        htmlFor="email"
+                                        required
+                                        error={errors.email}
+                                    >
+                                        <input
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            autoComplete="email"
+                                            required
+                                            aria-invalid={!!errors.email}
+                                            className={inputClassName}
+                                        />
+                                    </FormField>
+
+                                    <FormField
+                                        label="Phone number"
+                                        htmlFor="phone"
+                                        error={errors.phone}
+                                    >
+                                        <input
+                                            id="phone"
+                                            name="phone"
+                                            type="tel"
+                                            autoComplete="tel"
+                                            aria-invalid={!!errors.phone}
+                                            className={inputClassName}
+                                        />
+                                    </FormField>
+
+                                    <FormField
+                                        label="How can we help?"
+                                        htmlFor="topic"
+                                        required
+                                        error={errors.topic}
+                                    >
+                                        <select
+                                            id="topic"
+                                            name="topic"
+                                            defaultValue={selectedTopic}
+                                            aria-invalid={!!errors.topic}
+                                            className={inputClassName}
+                                        >
+                                            {topics.map((topic) => (
+                                                <option
+                                                    key={topic.value}
+                                                    value={topic.value}
+                                                >
+                                                    {topic.label}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </FormField>
+
+                                    <FormField
+                                        label="Message"
+                                        htmlFor="message"
+                                        required
+                                        error={errors.message}
+                                        className="sm:col-span-2"
+                                    >
+                                        <textarea
+                                            id="message"
+                                            name="message"
+                                            rows={6}
+                                            required
+                                            aria-invalid={!!errors.message}
+                                            className={inputClassName}
+                                        />
+                                    </FormField>
+
+                                    <div className="sm:col-span-2">
+                                        <button
+                                            type="submit"
+                                            disabled={processing}
+                                            className={buttonLinkVariants({
+                                                size: 'lg',
+                                            })}
+                                        >
+                                            {processing ? (
+                                                <Spinner />
+                                            ) : (
+                                                <Send />
+                                            )}
+                                            Send message
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                        </Form>
+                    </div>
+                </Container>
+            </section>
+        </>
+    );
+}
