@@ -6,9 +6,9 @@ import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
-import { ctProgram, register } from '@/routes';
+import { contact, ctProgram } from '@/routes';
 
-const enrollHref = register({ query: { package: 'complete' } });
+const enrollHref = contact({ query: { topic: 'ct-program' } });
 
 const institutionalOutcomes = [
     {

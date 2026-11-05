@@ -18,9 +18,16 @@ import CtaSection from '@/components/site/cta-section';
 import PartnerLogos from '@/components/site/partner-logos';
 import SectionHeading from '@/components/site/section-heading';
 import { modalities } from '@/lib/site';
-import { about, advocacy, consulting, ctProgram, staffing } from '@/routes';
-import { create as requestStaff } from '@/routes/staff-request';
-import { create as joinOurTeam } from '@/routes/technologist-application';
+import {
+    about,
+    advocacy,
+    consulting,
+    contact,
+    ctProgram,
+    staffing,
+} from '@/routes';
+
+const contactStaffing = contact({ query: { topic: 'staffing' } });
 
 const services = [
     {
@@ -133,8 +140,8 @@ export default function Home() {
                             the field.
                         </p>
                         <div className="mt-10 flex flex-wrap gap-3">
-                            <ButtonLink href={requestStaff()} size="lg">
-                                Request Staff
+                            <ButtonLink href={contactStaffing} size="lg">
+                                Contact Us
                                 <ArrowRight />
                             </ButtonLink>
                             <ButtonLink
@@ -267,12 +274,6 @@ export default function Home() {
                             <ButtonLink href={staffing()} variant="light">
                                 View staffing services
                             </ButtonLink>
-                            <ButtonLink
-                                href={requestStaff()}
-                                variant="ghostLight"
-                            >
-                                Request staff
-                            </ButtonLink>
                         </div>
                     </div>
                     <ul className="flex flex-wrap gap-3">
@@ -332,8 +333,8 @@ export default function Home() {
                             with a hands-on approach.
                         </p>
                         <div className="mt-8">
-                            <ButtonLink href={requestStaff()}>
-                                Request staff
+                            <ButtonLink href={contactStaffing}>
+                                Contact us
                                 <ArrowRight />
                             </ButtonLink>
                         </div>
@@ -353,10 +354,7 @@ export default function Home() {
                             credential.
                         </p>
                         <div className="mt-8 flex flex-wrap gap-3">
-                            <ButtonLink href={joinOurTeam()} variant="light">
-                                Join our team
-                            </ButtonLink>
-                            <ButtonLink href={ctProgram()} variant="ghostLight">
+                            <ButtonLink href={ctProgram()} variant="light">
                                 CT Certification Program
                             </ButtonLink>
                         </div>
@@ -370,11 +368,8 @@ export default function Home() {
                 title="Let’s build a stronger imaging team together"
                 description="Whether you need coverage next week or a long-term partner, our team is ready to help."
             >
-                <ButtonLink href={requestStaff()} size="lg">
-                    Request Staff
-                </ButtonLink>
-                <ButtonLink href={joinOurTeam()} size="lg" variant="ghostLight">
-                    Apply as a Technologist
+                <ButtonLink href={contactStaffing} size="lg">
+                    Contact Us
                 </ButtonLink>
             </CtaSection>
         </>

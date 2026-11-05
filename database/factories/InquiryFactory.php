@@ -26,7 +26,6 @@ class InquiryFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'message' => fake()->paragraph(),
             'details' => ['topic' => ContactTopic::General->label()],
-            'attachment_path' => null,
         ];
     }
 }

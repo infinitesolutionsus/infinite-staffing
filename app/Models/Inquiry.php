@@ -17,11 +17,10 @@ use Illuminate\Support\Carbon;
  * @property string|null $phone
  * @property string|null $message
  * @property array<string, mixed>|null $details
- * @property string|null $attachment_path
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['type', 'name', 'email', 'phone', 'message', 'details', 'attachment_path'])]
+#[Fillable(['type', 'name', 'email', 'phone', 'message', 'details'])]
 class Inquiry extends Model
 {
     /** @use HasFactory<InquiryFactory> */

@@ -1,8 +1,6 @@
 import type { InertiaLinkProps } from '@inertiajs/react';
 import {
     about,
-    login,
-    register,
     advocacy,
     consulting,
     contact,
@@ -12,8 +10,6 @@ import {
     staffing,
 } from '@/routes';
 import { curriculum } from '@/routes/ct-program';
-import { create as requestStaff } from '@/routes/staff-request';
-import { create as joinOurTeam } from '@/routes/technologist-application';
 
 export const company = {
     name: 'Infinite Staffing Solutions',
@@ -80,7 +76,6 @@ export const mainNavigation: SiteNavItem[] = [
             },
         ],
     },
-    { title: 'Careers', href: joinOurTeam() },
     { title: 'Contact', href: contact() },
 ];
 
@@ -90,7 +85,6 @@ export const footerNavigation: { title: string; links: SiteNavLink[] }[] = [
         links: [
             { title: 'Home', href: home() },
             { title: 'About Us', href: about() },
-            { title: 'Careers', href: joinOurTeam() },
             { title: 'Contact', href: contact() },
         ],
     },
@@ -98,7 +92,6 @@ export const footerNavigation: { title: string; links: SiteNavLink[] }[] = [
         title: 'Services',
         links: [
             { title: 'Radiology Staffing', href: staffing() },
-            { title: 'Request Staff', href: requestStaff() },
             { title: 'Consulting Services', href: consulting() },
             { title: 'Advocacy Program', href: advocacy() },
         ],
@@ -109,8 +102,6 @@ export const footerNavigation: { title: string; links: SiteNavLink[] }[] = [
             { title: 'CT Certification Program', href: ctProgram() },
             { title: 'Curriculum', href: curriculum() },
             { title: 'Newsletter', href: newsletter() },
-            { title: 'Program Registration', href: register() },
-            { title: 'Student Login', href: login() },
         ],
     },
 ];

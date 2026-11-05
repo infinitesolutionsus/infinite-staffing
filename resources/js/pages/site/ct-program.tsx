@@ -15,11 +15,11 @@ import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
 import { cn } from '@/lib/utils';
-import { contact, newsletter, register } from '@/routes';
+import { contact, newsletter } from '@/routes';
 import { curriculum } from '@/routes/ct-program';
 
-const enrollHref = register();
 const questionsHref = contact({ query: { topic: 'ct-program' } });
+const enrollHref = questionsHref;
 
 const sectionLinks = [
     { id: 'overview', label: 'Overview' },
@@ -479,9 +479,7 @@ export default function CtProgram() {
                                     ))}
                                 </ul>
                                 <ButtonLink
-                                    href={register({
-                                        query: { package: pkg.value },
-                                    })}
+                                    href={enrollHref}
                                     variant={
                                         pkg.featured ? 'primary' : 'outline'
                                     }

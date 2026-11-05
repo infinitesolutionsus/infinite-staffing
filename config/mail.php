@@ -120,11 +120,29 @@ return [
     | Inquiry Recipient
     |--------------------------------------------------------------------------
     |
-    | Submissions from the public website's contact, staff request and
-    | technologist application forms are emailed to this address.
+    | Submissions from the public website's contact form are emailed to
+    | this address.
     |
     */
 
     'inquiry_recipient' => env('MAIL_INQUIRY_RECIPIENT', 'info@infinitestaffingsolutions.com'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Markdown Mail Settings
+    |--------------------------------------------------------------------------
+    |
+    | Emails use the branded "infinite" theme and the logo header and footer
+    | in resources/views/vendor/mail/html.
+    |
+    */
+
+    'markdown' => [
+        'theme' => env('MAIL_MARKDOWN_THEME', 'infinite'),
+
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+    ],
 
 ];

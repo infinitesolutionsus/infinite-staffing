@@ -3,8 +3,11 @@
 namespace App\Providers;
 
 use Carbon\CarbonImmutable;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +27,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureRateLimiting();
+    }
+
+    /**
+     * Configure rate limiting.
+     */
+    protected function configureRateLimiting(): void
+    {
+        // Live validation checks never save anything, so they get a looser
+        // limit than real submissions. Separate keys keep them from sharing a budget.
+        RateLimiter::for('contact', fn (Request $request): Limit => $request->isPrecognitive()
+            ? Limit::perMinute(120)->by('contact-validate|'.$request->ip())
+            : Limit::perMinute(6)->by('contact|'.$request->ip()),
+        );
     }
 
     /**

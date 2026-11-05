@@ -1,7 +1,6 @@
-import { Link, usePage } from '@inertiajs/react';
-import { ChevronDown, CircleUserRound, Menu, Phone } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import { ChevronDown, Menu, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import ButtonLink from '@/components/site/button-link';
 import Container from '@/components/site/container';
 import SiteLogo from '@/components/site/site-logo';
 import {
@@ -13,17 +12,12 @@ import {
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { company, mainNavigation } from '@/lib/site';
 import { cn } from '@/lib/utils';
-import { dashboard, home, login, register } from '@/routes';
-import { create as requestStaff } from '@/routes/staff-request';
+import { home } from '@/routes';
 
 export default function SiteHeader() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { isCurrentUrl } = useCurrentUrl();
-    const { auth } = usePage().props;
-    const accountLink = auth.user
-        ? { title: 'Dashboard', href: dashboard() }
-        : { title: 'Log in', href: login() };
 
     useEffect(() => {
         const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -67,14 +61,6 @@ export default function SiteHeader() {
                         >
                             {company.email}
                         </a>
-                        {!auth.user && (
-                            <Link
-                                href={register()}
-                                className="font-semibold text-brand-300 hover:text-white"
-                            >
-                                CT Program Registration
-                            </Link>
-                        )}
                     </div>
                 </Container>
             </div>
@@ -84,7 +70,7 @@ export default function SiteHeader() {
                     <SiteLogo inverted={!isScrolled} />
                 </Link>
 
-                <nav className="hidden items-center gap-1 lg:flex">
+                <nav className="ml-auto hidden items-center gap-1 lg:flex">
                     {mainNavigation.map((item) =>
                         item.children ? (
                             <div key={item.title} className="group relative">
@@ -142,27 +128,7 @@ export default function SiteHeader() {
                     )}
                 </nav>
 
-                <div className="flex items-center gap-2">
-                    <Link
-                        href={accountLink.href}
-                        className={cn(
-                            'hidden items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold transition lg:flex',
-                            isScrolled
-                                ? 'text-slate-700 hover:text-brand-600'
-                                : 'text-white/90 hover:text-white',
-                        )}
-                    >
-                        <CircleUserRound className="size-4" />
-                        {accountLink.title}
-                    </Link>
-                    <ButtonLink
-                        href={requestStaff()}
-                        size="sm"
-                        className="hidden sm:inline-flex"
-                    >
-                        Request Staff
-                    </ButtonLink>
-
+                <div className="flex items-center gap-2 lg:hidden">
                     <Sheet
                         open={isMobileMenuOpen}
                         onOpenChange={setIsMobileMenuOpen}
@@ -218,34 +184,9 @@ export default function SiteHeader() {
                                     </div>
                                 ))}
                             </nav>
-                            <ButtonLink
-                                href={requestStaff()}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="mt-6 w-full"
-                            >
-                                Request Staff
-                            </ButtonLink>
-                            <ButtonLink
-                                href={accountLink.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                variant="outline"
-                                className="w-full"
-                            >
-                                <CircleUserRound />
-                                {accountLink.title}
-                            </ButtonLink>
-                            {!auth.user && (
-                                <Link
-                                    href={register()}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-center text-sm font-semibold text-brand-600"
-                                >
-                                    CT Program Registration
-                                </Link>
-                            )}
                             <a
                                 href={company.phoneHref}
-                                className="flex items-center justify-center gap-2 text-sm font-semibold text-slate-600"
+                                className="mt-6 flex items-center justify-center gap-2 text-sm font-semibold text-slate-600"
                             >
                                 <Phone className="size-4" />
                                 {company.phone}

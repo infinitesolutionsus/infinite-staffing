@@ -19,8 +19,9 @@ import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
-import { create as requestStaff } from '@/routes/staff-request';
-import { create as joinOurTeam } from '@/routes/technologist-application';
+import { contact } from '@/routes';
+
+const contactStaffing = contact({ query: { topic: 'staffing' } });
 
 const services = [
     {
@@ -114,12 +115,9 @@ export default function Staffing() {
                 description="We connect healthcare facilities with highly skilled radiologic technologists across every modality — for short-term coverage or long-term placement."
                 image="/images/staff-doctor.jpeg"
             >
-                <ButtonLink href={requestStaff()} size="lg">
-                    Request Staff
+                <ButtonLink href={contactStaffing} size="lg">
+                    Contact Us
                     <ArrowRight />
-                </ButtonLink>
-                <ButtonLink href={joinOurTeam()} size="lg" variant="ghostLight">
-                    Technologist Application
                 </ButtonLink>
             </PageHero>
 
@@ -231,13 +229,10 @@ export default function Staffing() {
 
             <CtaSection
                 title="Ready to strengthen your imaging team?"
-                description="Facilities can request staff in minutes. Technologists can apply to join our team."
+                description="Tell us what coverage you need and our team will be in touch."
             >
-                <ButtonLink href={requestStaff()} size="lg">
-                    Request Staff
-                </ButtonLink>
-                <ButtonLink href={joinOurTeam()} size="lg" variant="ghostLight">
-                    Technologist Application
+                <ButtonLink href={contactStaffing} size="lg">
+                    Contact Us
                 </ButtonLink>
             </CtaSection>
         </>
