@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\InquiryType;
+use App\Mail\InquiryConfirmation;
 use App\Mail\InquiryReceived;
 use App\Models\Inquiry;
 use Illuminate\Support\Facades\Exceptions;
@@ -71,4 +72,77 @@ test('a contact inquiry rejects an unknown topic', function () {
         'topic' => 'billing',
         'message' => 'Hello!',
     ])->assertSessionHasErrors(['topic' => 'The selected topic is invalid.']);
+});
+
+test('live validation checks a single field without saving anything', function () {
+    Mail::fake();
+
+    $this->withHeaders(['Precognition' => 'true', 'Precognition-Validate-Only' => 'email'])
+        ->postJson(route('contact.store'), ['email' => 'not-an-email'])
+        ->assertStatus(422)
+        ->assertJsonValidationErrors(['email'])
+        ->assertJsonMissingValidationErrors(['name', 'message']);
+
+    $this->withHeaders(['Precognition' => 'true', 'Precognition-Validate-Only' => 'email'])
+        ->post(route('contact.store'), ['email' => 'jordan@example.com'])
+        ->assertNoContent();
+
+    expect(Inquiry::count())->toBe(0);
+    Mail::assertNothingSent();
+});
+
+test('live validation checks do not use up the submission rate limit', function () {
+    Mail::fake();
+
+    foreach (range(1, 10) as $attempt) {
+        $this->withHeaders(['Precognition' => 'true', 'Precognition-Validate-Only' => 'name'])
+            ->post(route('contact.store'), ['name' => 'Jordan'])
+            ->assertNoContent();
+    }
+
+    $this->flushHeaders()->post(route('contact.store'), [
+        'name' => 'Jordan Rivera',
+        'email' => 'jordan@example.com',
+        'topic' => 'general',
+        'message' => 'Hello!',
+    ])->assertRedirect(route('contact'));
+});
+
+test('the visitor receives a confirmation email with a copy of their message', function () {
+    Mail::fake();
+
+    $this->post(route('contact.store'), [
+        'name' => 'Jordan Rivera',
+        'email' => 'jordan@example.com',
+        'topic' => 'staffing',
+        'message' => 'We need two CT techs next month.',
+    ])->assertRedirect(route('contact'));
+
+    Mail::assertSent(InquiryConfirmation::class, function (InquiryConfirmation $mail) {
+        $mail->assertSeeInHtml('We need two CT techs next month.')
+            ->assertSeeInHtml('Radiology Staffing');
+
+        return $mail->hasTo('jordan@example.com')
+            && $mail->hasReplyTo('info@infinitestaffingsolutions.com')
+            && $mail->hasSubject('We received your message');
+    });
+
+    Mail::assertSentCount(2);
+});
+
+test('the team email includes every detail from the form', function () {
+    $inquiry = Inquiry::factory()->create([
+        'name' => 'Jordan Rivera',
+        'email' => 'jordan@example.com',
+        'phone' => '(555) 555-0100',
+        'message' => 'We need two CT techs next month.',
+        'details' => ['Topic' => 'Radiology Staffing'],
+    ]);
+
+    (new InquiryReceived($inquiry))
+        ->assertSeeInHtml('Jordan Rivera')
+        ->assertSeeInHtml('jordan@example.com')
+        ->assertSeeInHtml('(555) 555-0100')
+        ->assertSeeInHtml('Radiology Staffing')
+        ->assertSeeInHtml('We need two CT techs next month.');
 });

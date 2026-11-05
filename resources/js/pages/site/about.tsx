@@ -8,7 +8,6 @@ import PartnerLogos from '@/components/site/partner-logos';
 import SectionHeading from '@/components/site/section-heading';
 import { cn } from '@/lib/utils';
 import { advocacy, consulting, contact, ctProgram } from '@/routes';
-import { create as requestStaff } from '@/routes/staff-request';
 
 const values = [
     {
@@ -40,7 +39,10 @@ const divisions = [
         tagline: 'Transforming the radiology staffing experience.',
         body: 'Our core service connects skilled radiologic technologists with hospitals and outpatient imaging centers throughout Los Angeles. We supply professionals across all modalities — from X-ray and MRI to ultrasound and nuclear medicine — ensuring healthcare providers have the expertise they need to deliver exceptional patient care.',
         image: '/images/about-staffing.jpg',
-        cta: { label: 'Request Staff', href: requestStaff() },
+        cta: {
+            label: 'Contact Us',
+            href: contact({ query: { topic: 'staffing' } }),
+        },
     },
     {
         division: 'Infinite Learning Solutions',
@@ -223,13 +225,6 @@ export default function About() {
             >
                 <ButtonLink href={contact()} size="lg">
                     Contact Us
-                </ButtonLink>
-                <ButtonLink
-                    href={requestStaff()}
-                    size="lg"
-                    variant="ghostLight"
-                >
-                    Request Staff
                 </ButtonLink>
             </CtaSection>
         </>

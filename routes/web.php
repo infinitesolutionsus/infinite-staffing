@@ -1,8 +1,7 @@
 <?php
 
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\StaffRequestController;
-use App\Http\Controllers\TechnologistApplicationController;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 
 Route::inertia('/', 'site/home')->name('home');
@@ -16,22 +15,17 @@ Route::inertia('consulting-services', 'site/consulting')->name('consulting');
 Route::inertia('advocacy-program', 'site/advocacy')->name('advocacy');
 
 Route::get('contact', [ContactController::class, 'create'])->name('contact');
-Route::post('contact', [ContactController::class, 'store'])->middleware('throttle:6,1')->name('contact.store');
+Route::post('contact', [ContactController::class, 'store'])
+    ->middleware([HandlePrecognitiveRequests::class, 'throttle:contact'])
+    ->name('contact.store');
 
-Route::get('request-staff', [StaffRequestController::class, 'create'])->name('staff-request.create');
-Route::post('request-staff', [StaffRequestController::class, 'store'])->middleware('throttle:6,1')->name('staff-request.store');
+// Removed pages now point to the contact form.
+Route::permanentRedirect('request-staff', '/contact?topic=staffing');
+Route::permanentRedirect('apply', '/contact?topic=staffing');
+Route::permanentRedirect('join-our-team', '/contact');
+Route::permanentRedirect('application', '/contact');
+Route::permanentRedirect('register', '/contact?topic=ct-program');
 
-Route::get('join-our-team', [TechnologistApplicationController::class, 'create'])->name('technologist-application.create');
-Route::post('join-our-team', [TechnologistApplicationController::class, 'store'])->middleware('throttle:6,1')->name('technologist-application.store');
-
-Route::permanentRedirect('apply', 'request-staff');
-Route::permanentRedirect('application', 'join-our-team');
 Route::permanentRedirect('our-courses', 'ct-program');
 Route::permanentRedirect('shops', 'ct-program');
 Route::permanentRedirect('courses/{course}', '/ct-program/curriculum');
-
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard')->name('dashboard');
-});
-
-require __DIR__.'/settings.php';

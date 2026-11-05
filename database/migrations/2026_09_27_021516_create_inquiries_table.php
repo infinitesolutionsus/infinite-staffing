@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('message')->nullable();
             $table->json('details')->nullable();
-            $table->string('attachment_path')->nullable();
             $table->timestamps();
         });
     }

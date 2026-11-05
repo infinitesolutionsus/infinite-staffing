@@ -6,7 +6,6 @@ use App\Models\Inquiry;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -39,19 +38,5 @@ class InquiryReceived extends Mailable
         return new Content(
             markdown: 'mail.inquiry-received',
         );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, Attachment>
-     */
-    public function attachments(): array
-    {
-        if ($this->inquiry->attachment_path === null) {
-            return [];
-        }
-
-        return [Attachment::fromStorage($this->inquiry->attachment_path)];
     }
 }

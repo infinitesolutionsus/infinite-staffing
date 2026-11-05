@@ -17,16 +17,21 @@ test('public pages render their page components', function (string $routeName, s
     ['consulting', 'site/consulting'],
     ['advocacy', 'site/advocacy'],
     ['contact', 'site/contact'],
-    ['staff-request.create', 'site/request-staff'],
-    ['technologist-application.create', 'site/technologist-application'],
 ]);
 
 test('legacy website urls permanently redirect to their new pages', function (string $legacyUrl, string $newUrl) {
     $this->get($legacyUrl)->assertStatus(301)->assertRedirect($newUrl);
 })->with([
-    ['/apply', '/request-staff'],
-    ['/application', '/join-our-team'],
+    ['/request-staff', '/contact?topic=staffing'],
+    ['/apply', '/contact?topic=staffing'],
+    ['/join-our-team', '/contact'],
+    ['/application', '/contact'],
+    ['/register', '/contact?topic=ct-program'],
     ['/our-courses', '/ct-program'],
     ['/shops', '/ct-program'],
     ['/courses/complete-ct-program', '/ct-program/curriculum'],
 ]);
+
+test('account pages are not available', function (string $url) {
+    $this->get($url)->assertNotFound();
+})->with(['/login', '/dashboard', '/settings/profile', '/forgot-password']);
