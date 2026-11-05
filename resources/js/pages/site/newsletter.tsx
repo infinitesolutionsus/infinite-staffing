@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import { ArrowRight, CalendarDays, Newspaper } from 'lucide-react';
 import ButtonLink from '@/components/site/button-link';
 import Container from '@/components/site/container';
@@ -22,13 +22,6 @@ export default function Newsletter() {
 
     return (
         <>
-            <Head title="CT Program Newsletter">
-                <meta
-                    name="description"
-                    content="The CT Connection — the monthly newsletter of the Infinite Learning Solutions CT Program."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Stay connected"
                 title="The CT Connection"

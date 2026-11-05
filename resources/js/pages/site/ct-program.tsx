@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import {
     ArrowRight,
     BookOpenCheck,
@@ -222,13 +222,6 @@ const faqs = [
 export default function CtProgram() {
     return (
         <>
-            <Head title="CT Certification Program">
-                <meta
-                    name="description"
-                    content="Earn your ARRT (CT) certification while you work. Online board review, weekly live sessions, and guaranteed clinical placement in Southern California."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Infinite Learning Solutions · Post Primary Academy"
                 title="Earn your CT certification. Advance your career."

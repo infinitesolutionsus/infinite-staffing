@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import {
     Activity,
     ArrowRight,
@@ -102,13 +101,6 @@ const steps = [
 export default function Staffing() {
     return (
         <>
-            <Head title="Radiology Staffing">
-                <meta
-                    name="description"
-                    content="Radiology staffing across every modality for Los Angeles hospitals and imaging centers — X-ray, CT, MRI, nuclear medicine, PET, ultrasound, mammography and more."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Radiology staffing"
                 title="We believe in the power behind precision imaging"

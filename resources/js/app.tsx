@@ -4,10 +4,10 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
 import SiteLayout from '@/layouts/site-layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
-
 void createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    // Titles and meta tags come from Laravel Head on the server, so they're in
+    // the first HTML response that search engines and link previews read.
+    serverHead: true,
     layout: () => SiteLayout,
     strictMode: true,
     withApp(app) {

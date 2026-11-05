@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import {
     ArrowRight,
     BookOpen,
@@ -73,13 +72,6 @@ const advocacyHref = contact({ query: { topic: 'advocacy' } });
 export default function Advocacy() {
     return (
         <>
-            <Head title="Healthcare Advocacy Program">
-                <meta
-                    name="description"
-                    content="Infinite Patient Solutions helps patients and families navigate the healthcare system — appointments, insurance, provider communication and care navigation."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Infinite Patient Solutions"
                 title="Clarity in care, confidence in decisions"

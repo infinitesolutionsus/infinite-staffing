@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import {
     ArrowRight,
     BadgeCheck,
@@ -60,13 +59,6 @@ const consultationHref = contact({ query: { topic: 'consulting' } });
 export default function Consulting() {
     return (
         <>
-            <Head title="Consulting Services">
-                <meta
-                    name="description"
-                    content="Strategic radiology consulting for imaging centers, hospitals and healthcare organizations — operations, protocols, workflow and best practices."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Healthcare Imaging Solutions"
                 title="Strategic solutions for radiology success"
