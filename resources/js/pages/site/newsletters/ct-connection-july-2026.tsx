@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import {
     ArrowLeft,
     Award,
@@ -94,13 +94,6 @@ const examPrepTips = [
 export default function CtConnectionJuly2026() {
     return (
         <>
-            <Head title="The CT Connection — July 2026">
-                <meta
-                    name="description"
-                    content="The July 2026 edition of The CT Connection, the Infinite Solutions CT Certification Program newsletter."
-                />
-            </Head>
-
             <section className="relative isolate overflow-hidden bg-navy-950 pt-36 pb-20 sm:pt-44">
                 <div
                     aria-hidden

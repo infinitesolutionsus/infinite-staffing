@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import { ArrowRight, ArrowUpRight, FileText } from 'lucide-react';
 import ButtonLink from '@/components/site/button-link';
 import CheckList from '@/components/site/check-list';
@@ -170,13 +169,6 @@ const arrtResources = [
 export default function CtCurriculum() {
     return (
         <>
-            <Head title="CT Program Curriculum">
-                <meta
-                    name="description"
-                    content="Complete Computed Tomography Review Program curriculum — learning outcomes, eight study modules, assessment and ARRT requirements."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Complete Computed Tomography Review Program"
                 title="CT Program curriculum"

@@ -1,4 +1,4 @@
-import { Form, Head } from '@inertiajs/react';
+import { Form } from '@inertiajs/react';
 import { useEffect, useRef } from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { store } from '@/actions/App/Http/Controllers/ContactController';
@@ -60,13 +60,6 @@ export default function Contact({ topics, selectedTopic }: ContactProps) {
 
     return (
         <>
-            <Head title="Contact Us">
-                <meta
-                    name="description"
-                    content="Contact Infinite Staffing Solutions about radiology staffing, the CT certification program, consulting or healthcare advocacy."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="Contact us"
                 title="We’d love to hear from you"

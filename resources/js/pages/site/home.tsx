@@ -1,4 +1,4 @@
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 import {
     ArrowRight,
     Award,
@@ -101,13 +101,6 @@ const stats = [
 export default function Home() {
     return (
         <>
-            <Head title="Radiology Staffing, CT Certification & Consulting">
-                <meta
-                    name="description"
-                    content="Infinite Staffing Solutions connects Los Angeles hospitals and imaging centers with skilled radiologic technologists, and helps technologists grow through CT certification, consulting and patient advocacy."
-                />
-            </Head>
-
             {/* Hero */}
             <section className="relative isolate overflow-hidden bg-navy-950 pt-36 pb-24 sm:pt-44 lg:pb-32">
                 <img

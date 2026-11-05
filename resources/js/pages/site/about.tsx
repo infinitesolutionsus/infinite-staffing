@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import ButtonLink from '@/components/site/button-link';
 import Container from '@/components/site/container';
@@ -91,13 +90,6 @@ const team = [
 export default function About() {
     return (
         <>
-            <Head title="About Us">
-                <meta
-                    name="description"
-                    content="Infinite Solutions is a Los Angeles radiology partner providing technologist staffing, CT certification, imaging consulting and patient advocacy."
-                />
-            </Head>
-
             <PageHero
                 eyebrow="About us"
                 title="Your partner in infinite healthcare solutions"

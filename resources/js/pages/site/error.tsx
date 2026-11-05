@@ -1,4 +1,3 @@
-import { Head } from '@inertiajs/react';
 import { ArrowRight, Phone } from 'lucide-react';
 import ButtonLink from '@/components/site/button-link';
 import Container from '@/components/site/container';
@@ -37,8 +36,6 @@ export default function ErrorPage({ status }: { status: number }) {
 
     return (
         <>
-            <Head title={title} />
-
             <section className="relative isolate flex min-h-[80vh] items-center overflow-hidden bg-navy-950 pt-36 pb-24 sm:pt-44">
                 <div
                     aria-hidden
