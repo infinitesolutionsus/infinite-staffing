@@ -17,6 +17,9 @@ import { home } from '@/routes';
 export default function SiteHeader() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    // The dropdown opens on hover/focus via CSS, so after a click it would stay
+    // open (the mouse is still over it). Hide it until the mouse leaves.
+    const [closedMenu, setClosedMenu] = useState<string | null>(null);
     const { isCurrentUrl } = useCurrentUrl();
 
     useEffect(() => {
@@ -73,7 +76,14 @@ export default function SiteHeader() {
                 <nav className="ml-auto hidden items-center gap-1 lg:flex">
                     {mainNavigation.map((item) =>
                         item.children ? (
-                            <div key={item.title} className="group relative">
+                            <div
+                                key={item.title}
+                                className={cn(
+                                    'relative',
+                                    closedMenu !== item.title && 'group',
+                                )}
+                                onMouseLeave={() => setClosedMenu(null)}
+                            >
                                 <button
                                     type="button"
                                     className={cn(
@@ -92,6 +102,12 @@ export default function SiteHeader() {
                                             <Link
                                                 key={child.title}
                                                 href={child.href}
+                                                onClick={(event) => {
+                                                    setClosedMenu(item.title);
+                                                    (
+                                                        event.currentTarget as HTMLElement
+                                                    ).blur();
+                                                }}
                                                 className="block rounded-xl px-4 py-3 transition hover:bg-brand-50"
                                             >
                                                 <span className="block text-sm font-semibold text-navy-950">
