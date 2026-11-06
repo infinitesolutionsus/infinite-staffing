@@ -1,11 +1,19 @@
 <?php
 
+/**
+ * Laravel Head always writes canonical URLs as https, whatever APP_URL is.
+ */
+function canonicalUrl(string $path): string
+{
+    return preg_replace('#^http://#', 'https://', rtrim(url('/'), '/')).$path;
+}
+
 test('pages render their own title, description and canonical url on the server', function (string $url, string $title, string $description) {
     $this->get($url)
         ->assertOk()
         ->assertSee("<title data-inertia=\"title\">{$title}</title>", escape: false)
         ->assertSee($description)
-        ->assertSee('<link data-inertia="canonical" rel="canonical" href="'.rtrim(url('/'), '/').$url.'">', escape: false);
+        ->assertSee('<link data-inertia="canonical" rel="canonical" href="'.canonicalUrl($url).'">', escape: false);
 })->with([
     ['/', 'Infinite Staffing Solutions | Radiology Staffing, CT Certification &amp; Consulting', 'connects Los Angeles hospitals and imaging centers'],
     ['/about', 'About Us | Infinite Staffing Solutions', 'Los Angeles radiology partner'],
