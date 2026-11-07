@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Head\Enums\OgType;
@@ -76,13 +77,16 @@ class AppServiceProvider extends ServiceProvider
         });
 
         // Icons are the same on every page, so they're sent once rather than per visit.
-        Head::inertiaGlobals(function (HeadBuilder $head) use ($siteName): void {
+        // Bump $iconVersion when the icons change so browsers drop their cached copies.
+        $iconVersion = 2;
+
+        Head::inertiaGlobals(function (HeadBuilder $head) use ($siteName, $iconVersion): void {
             $head
                 ->applicationName($siteName)
-                ->favicon('/favicon.ico', sizes: '32x32')
-                ->icon('/favicon-32.png', type: 'image/png', sizes: '32x32')
-                ->icon('/favicon-512.png', type: 'image/png', sizes: '512x512')
-                ->appleTouchIcon('/apple-touch-icon.png', sizes: '180x180');
+                ->favicon("/favicon.ico?v={$iconVersion}", sizes: '32x32')
+                ->icon("/favicon-32.png?v={$iconVersion}", type: 'image/png', sizes: '32x32')
+                ->icon("/favicon-512.png?v={$iconVersion}", type: 'image/png', sizes: '512x512')
+                ->appleTouchIcon("/apple-touch-icon.png?v={$iconVersion}", sizes: '180x180');
         });
 
         // Error pages should never show up in search results.
@@ -115,6 +119,10 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
+
+        // Laravel Cloud handles HTTPS before the request reaches the app, so generated
+        // links (share images, logo) would otherwise come out as http://.
+        URL::forceHttps(app()->isProduction());
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),
