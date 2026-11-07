@@ -25,8 +25,8 @@ test('pages include social sharing tags, icons and organization data', function 
     $this->get('/')
         ->assertSee('property="og:image" content="'.asset('images/og-image.jpg').'"', escape: false)
         ->assertSee('name="twitter:card" content="summary_large_image"', escape: false)
-        ->assertSee('<link rel="icon" href="/favicon.ico?v=2"', escape: false)
-        ->assertSee('<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2"', escape: false)
+        ->assertSee('<link rel="icon" href="/favicon.ico"', escape: false)
+        ->assertSee('<link rel="apple-touch-icon" href="/apple-touch-icon.png"', escape: false)
         ->assertSee('application/ld+json', escape: false)
         ->assertSee('"@type":"Organization"', escape: false);
 });
