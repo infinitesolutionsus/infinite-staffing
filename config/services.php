@@ -28,6 +28,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    /*
+     * The Infinite Learning Solutions student site, where "Enroll" buttons send
+     * people to register. Set per environment so links work end to end.
+     */
+    'infinite_learning' => [
+        'url' => rtrim(env('INFINITE_LEARNING_URL', 'https://infinite-learning.test'), '/'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

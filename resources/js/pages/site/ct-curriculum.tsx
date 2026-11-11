@@ -5,9 +5,8 @@ import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
-import { contact, ctProgram } from '@/routes';
-
-const enrollHref = contact({ query: { topic: 'ct-program' } });
+import { useEnrollUrl } from '@/hooks/use-enroll-url';
+import { ctProgram } from '@/routes';
 
 const institutionalOutcomes = [
     {
@@ -167,6 +166,8 @@ const arrtResources = [
 ];
 
 export default function CtCurriculum() {
+    const enrollHref = useEnrollUrl()('complete-ct-program');
+
     return (
         <>
             <PageHero

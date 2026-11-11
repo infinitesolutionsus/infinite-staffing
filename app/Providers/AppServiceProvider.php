@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Laravel\Head\Enums\OgType;
@@ -115,6 +116,10 @@ class AppServiceProvider extends ServiceProvider
     protected function configureDefaults(): void
     {
         Date::use(CarbonImmutable::class);
+
+        // Laravel Cloud handles HTTPS before the request reaches the app, so generated
+        // links (share images, logo) would otherwise come out as http://.
+        URL::forceHttps(app()->isProduction());
 
         DB::prohibitDestructiveCommands(
             app()->isProduction(),

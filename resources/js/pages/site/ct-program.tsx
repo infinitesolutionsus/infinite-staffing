@@ -14,12 +14,12 @@ import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
+import { useEnrollUrl } from '@/hooks/use-enroll-url';
 import { cn } from '@/lib/utils';
 import { contact, newsletter } from '@/routes';
 import { curriculum } from '@/routes/ct-program';
 
 const questionsHref = contact({ query: { topic: 'ct-program' } });
-const enrollHref = questionsHref;
 
 const sectionLinks = [
     { id: 'overview', label: 'Overview' },
@@ -82,6 +82,7 @@ const schedule = [
 const packages = [
     {
         value: 'complete',
+        program: 'complete-ct-program',
         name: 'Complete CT Program',
         price: '$1,995',
         description: 'Board Review + Exam Prep + Clinical Placement',
@@ -95,6 +96,7 @@ const packages = [
     },
     {
         value: 'board-review',
+        program: 'board-review-exam-prep',
         name: 'Board Review + Exam Prep',
         price: '$550',
         description: 'For those who already have a clinical site',
@@ -107,6 +109,7 @@ const packages = [
     },
     {
         value: 'clinical-site',
+        program: 'clinical-site-only',
         name: 'Clinical Site Only',
         price: '$1,495',
         description:
@@ -220,6 +223,9 @@ const faqs = [
 ];
 
 export default function CtProgram() {
+    const enrollUrl = useEnrollUrl();
+    const enrollHref = enrollUrl('complete-ct-program');
+
     return (
         <>
             <PageHero
@@ -472,7 +478,7 @@ export default function CtProgram() {
                                     ))}
                                 </ul>
                                 <ButtonLink
-                                    href={enrollHref}
+                                    href={enrollUrl(pkg.program)}
                                     variant={
                                         pkg.featured ? 'primary' : 'outline'
                                     }

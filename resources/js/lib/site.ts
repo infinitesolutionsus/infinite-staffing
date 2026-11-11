@@ -1,15 +1,5 @@
 import type { InertiaLinkProps } from '@inertiajs/react';
-import {
-    about,
-    advocacy,
-    consulting,
-    contact,
-    ctProgram,
-    home,
-    newsletter,
-    staffing,
-} from '@/routes';
-import { curriculum } from '@/routes/ct-program';
+import { about, advocacy, consulting, contact, home, staffing } from '@/routes';
 
 export const company = {
     name: 'Infinite Staffing Solutions',
@@ -32,7 +22,11 @@ export type SiteNavItem = SiteNavLink & {
     children?: SiteNavLink[];
 };
 
-export const mainNavigation: SiteNavItem[] = [
+/**
+ * The Academy lives on the Infinite Learning site, whose URL is configured per
+ * environment and shared with every page, so the menus are built from it.
+ */
+export const mainNavigation = (infiniteLearningUrl: string): SiteNavItem[] => [
     { title: 'About', href: about() },
     {
         title: 'Services',
@@ -55,31 +49,13 @@ export const mainNavigation: SiteNavItem[] = [
             },
         ],
     },
-    {
-        title: 'Academy',
-        href: ctProgram(),
-        children: [
-            {
-                title: 'CT Certification Program',
-                href: ctProgram(),
-                description: 'Earn your ARRT (CT) credential while you work.',
-            },
-            {
-                title: 'Curriculum',
-                href: curriculum(),
-                description: 'Modules, learning outcomes and requirements.',
-            },
-            {
-                title: 'Newsletter',
-                href: newsletter(),
-                description: 'The CT Connection, our monthly update.',
-            },
-        ],
-    },
+    { title: 'Academy', href: infiniteLearningUrl },
     { title: 'Contact', href: contact() },
 ];
 
-export const footerNavigation: { title: string; links: SiteNavLink[] }[] = [
+export const footerNavigation = (
+    infiniteLearningUrl: string,
+): { title: string; links: SiteNavLink[] }[] => [
     {
         title: 'Company',
         links: [
@@ -99,9 +75,7 @@ export const footerNavigation: { title: string; links: SiteNavLink[] }[] = [
     {
         title: 'Academy',
         links: [
-            { title: 'CT Certification Program', href: ctProgram() },
-            { title: 'Curriculum', href: curriculum() },
-            { title: 'Newsletter', href: newsletter() },
+            { title: 'Infinite Learning Solutions', href: infiniteLearningUrl },
         ],
     },
 ];
