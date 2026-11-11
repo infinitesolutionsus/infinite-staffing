@@ -53,6 +53,17 @@ export function useCurrentUrl(): UseCurrentUrlReturn {
         try {
             const absoluteUrl = new URL(urlString);
 
+            // A link to another site is never the current page, even when
+            // its path matches (e.g. its home page and ours are both "/").
+            // During SSR there is no origin to compare, and this app's own
+            // links are relative, so a full URL is treated as another site.
+            if (
+                typeof window === 'undefined' ||
+                absoluteUrl.origin !== window.location.origin
+            ) {
+                return false;
+            }
+
             return comparePath(absoluteUrl.pathname);
         } catch {
             return false;
