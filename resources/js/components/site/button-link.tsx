@@ -1,7 +1,7 @@
-import { Link } from '@inertiajs/react';
 import type { InertiaLinkProps } from '@inertiajs/react';
 import { cva } from 'class-variance-authority';
 import type { VariantProps } from 'class-variance-authority';
+import SiteLink from '@/components/site/site-link';
 import { cn } from '@/lib/utils';
 
 export const buttonLinkVariants = cva(
@@ -41,7 +41,7 @@ export default function ButtonLink({
     ...props
 }: ButtonLinkProps) {
     return (
-        <Link
+        <SiteLink
             className={cn(buttonLinkVariants({ variant, size }), className)}
             {...props}
         />

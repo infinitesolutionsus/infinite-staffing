@@ -26,7 +26,6 @@ test('legacy website urls permanently redirect to their new pages', function (st
     ['/apply', '/contact?topic=staffing'],
     ['/join-our-team', '/contact'],
     ['/application', '/contact'],
-    ['/register', '/contact?topic=ct-program'],
     ['/our-courses', '/ct-program'],
     ['/shops', '/ct-program'],
     ['/courses/complete-ct-program', '/ct-program/curriculum'],
@@ -34,4 +33,11 @@ test('legacy website urls permanently redirect to their new pages', function (st
 
 test('account pages are not available', function (string $url) {
     $this->get($url)->assertNotFound();
-})->with(['/login', '/dashboard', '/settings/profile', '/forgot-password']);
+})->with(['/login', '/register', '/dashboard', '/settings/profile', '/forgot-password']);
+
+test('pages share the configured infinite learning url for enroll links', function () {
+    config(['services.infinite_learning.url' => 'https://learning.example.com']);
+
+    $this->get(route('ct-program'))
+        ->assertInertia(fn (Assert $page) => $page->where('infiniteLearningUrl', 'https://learning.example.com'));
+});

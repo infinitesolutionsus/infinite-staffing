@@ -1,7 +1,8 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { ChevronDown, Menu, Phone } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import Container from '@/components/site/container';
+import SiteLink from '@/components/site/site-link';
 import SiteLogo from '@/components/site/site-logo';
 import {
     Sheet,
@@ -15,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { home } from '@/routes';
 
 export default function SiteHeader() {
+    const navigation = mainNavigation(usePage().props.infiniteLearningUrl);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     // The dropdown opens on hover/focus via CSS, so after a click it would stay
@@ -74,7 +76,7 @@ export default function SiteHeader() {
                 </Link>
 
                 <nav className="ml-auto hidden items-center gap-1 lg:flex">
-                    {mainNavigation.map((item) =>
+                    {navigation.map((item) =>
                         item.children ? (
                             <div
                                 key={item.title}
@@ -99,7 +101,7 @@ export default function SiteHeader() {
                                 <div className="invisible absolute top-full left-1/2 w-80 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
                                     <div className="rounded-2xl border border-slate-200 bg-white p-2 shadow-xl shadow-navy-950/10">
                                         {item.children.map((child) => (
-                                            <Link
+                                            <SiteLink
                                                 key={child.title}
                                                 href={child.href}
                                                 onClick={(event) => {
@@ -118,13 +120,13 @@ export default function SiteHeader() {
                                                         {child.description}
                                                     </span>
                                                 )}
-                                            </Link>
+                                            </SiteLink>
                                         ))}
                                     </div>
                                 </div>
                             </div>
                         ) : (
-                            <Link
+                            <SiteLink
                                 key={item.title}
                                 href={item.href}
                                 className={cn(
@@ -139,7 +141,7 @@ export default function SiteHeader() {
                                 )}
                             >
                                 {item.title}
-                            </Link>
+                            </SiteLink>
                         ),
                     )}
                 </nav>
@@ -164,7 +166,7 @@ export default function SiteHeader() {
                             </SheetTitle>
                             <SiteLogo className="h-10 self-start" />
                             <nav className="mt-4 grid gap-1">
-                                {mainNavigation.map((item) => (
+                                {navigation.map((item) => (
                                     <div key={item.title}>
                                         {item.children ? (
                                             <>
@@ -172,7 +174,7 @@ export default function SiteHeader() {
                                                     {item.title}
                                                 </p>
                                                 {item.children.map((child) => (
-                                                    <Link
+                                                    <SiteLink
                                                         key={child.title}
                                                         href={child.href}
                                                         onClick={() =>
@@ -183,11 +185,11 @@ export default function SiteHeader() {
                                                         className="block rounded-lg px-3 py-2.5 font-semibold text-navy-950 hover:bg-brand-50"
                                                     >
                                                         {child.title}
-                                                    </Link>
+                                                    </SiteLink>
                                                 ))}
                                             </>
                                         ) : (
-                                            <Link
+                                            <SiteLink
                                                 href={item.href}
                                                 onClick={() =>
                                                     setIsMobileMenuOpen(false)
@@ -195,7 +197,7 @@ export default function SiteHeader() {
                                                 className="block rounded-lg px-3 py-2.5 font-semibold text-navy-950 hover:bg-brand-50"
                                             >
                                                 {item.title}
-                                            </Link>
+                                            </SiteLink>
                                         )}
                                     </div>
                                 ))}

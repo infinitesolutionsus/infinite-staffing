@@ -1,11 +1,13 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import Container from '@/components/site/container';
+import SiteLink from '@/components/site/site-link';
 import SiteLogo from '@/components/site/site-logo';
 import { company, footerNavigation } from '@/lib/site';
 import { home } from '@/routes';
 
 export default function SiteFooter() {
+    const navigation = footerNavigation(usePage().props.infiniteLearningUrl);
     return (
         <footer className="bg-navy-950 text-slate-300">
             <Container className="grid gap-12 py-16 lg:grid-cols-12">
@@ -58,7 +60,7 @@ export default function SiteFooter() {
                 </div>
 
                 <div className="grid gap-10 sm:grid-cols-3 lg:col-span-7 lg:col-start-6">
-                    {footerNavigation.map((group) => (
+                    {navigation.map((group) => (
                         <div key={group.title}>
                             <h3 className="font-display text-sm font-semibold tracking-[0.18em] text-white uppercase">
                                 {group.title}
@@ -66,12 +68,12 @@ export default function SiteFooter() {
                             <ul className="mt-5 grid gap-3 text-sm">
                                 {group.links.map((link) => (
                                     <li key={link.title}>
-                                        <Link
+                                        <SiteLink
                                             href={link.href}
                                             className="transition hover:text-brand-300"
                                         >
                                             {link.title}
-                                        </Link>
+                                        </SiteLink>
                                     </li>
                                 ))}
                             </ul>

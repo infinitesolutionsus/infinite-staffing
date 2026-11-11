@@ -44,7 +44,6 @@ Route::permanentRedirect('request-staff', '/contact?topic=staffing');
 Route::permanentRedirect('apply', '/contact?topic=staffing');
 Route::permanentRedirect('join-our-team', '/contact');
 Route::permanentRedirect('application', '/contact');
-Route::permanentRedirect('register', '/contact?topic=ct-program');
 
 Route::permanentRedirect('our-courses', 'ct-program');
 Route::permanentRedirect('shops', 'ct-program');
