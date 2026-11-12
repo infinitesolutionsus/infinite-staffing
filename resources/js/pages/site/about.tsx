@@ -5,8 +5,12 @@ import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import PartnerLogos from '@/components/site/partner-logos';
 import SectionHeading from '@/components/site/section-heading';
+import {
+    ctProgramPath,
+    useInfiniteLearningUrl,
+} from '@/hooks/use-infinite-learning-url';
 import { cn } from '@/lib/utils';
-import { advocacy, consulting, contact, ctProgram } from '@/routes';
+import { advocacy, consulting, contact } from '@/routes';
 
 const values = [
     {
@@ -49,7 +53,7 @@ const divisions = [
         tagline: 'Supplying excellence, while growing in your expertise.',
         body: 'Our CT Program is designed for working technologists who want to expand their skills by specializing in Computed Tomography. With flexible online learning, affordable tuition and hands-on clinical opportunities, we make career growth accessible and achievable — on your schedule.',
         image: '/images/about-learning.jpg',
-        cta: { label: 'CT Program Information', href: ctProgram() },
+        cta: { label: 'CT Program Information', learningPath: ctProgramPath },
     },
     {
         division: 'Healthcare Imaging Specialists',
@@ -88,6 +92,8 @@ const team = [
 ];
 
 export default function About() {
+    const learningUrl = useInfiniteLearningUrl();
+
     return (
         <>
             <PageHero
@@ -165,7 +171,13 @@ export default function About() {
                                     {division.body}
                                 </p>
                                 <ButtonLink
-                                    href={division.cta.href}
+                                    href={
+                                        'learningPath' in division.cta
+                                            ? learningUrl(
+                                                  division.cta.learningPath,
+                                              )
+                                            : division.cta.href
+                                    }
                                     variant="dark"
                                     className="mt-8"
                                 >

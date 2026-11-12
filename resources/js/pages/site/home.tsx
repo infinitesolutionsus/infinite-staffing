@@ -1,4 +1,3 @@
-import { Link } from '@inertiajs/react';
 import {
     ArrowRight,
     Award,
@@ -16,16 +15,14 @@ import ButtonLink from '@/components/site/button-link';
 import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PartnerLogos from '@/components/site/partner-logos';
+import SiteLink from '@/components/site/site-link';
 import SectionHeading from '@/components/site/section-heading';
-import { modalities } from '@/lib/site';
 import {
-    about,
-    advocacy,
-    consulting,
-    contact,
-    ctProgram,
-    staffing,
-} from '@/routes';
+    ctProgramPath,
+    useInfiniteLearningUrl,
+} from '@/hooks/use-infinite-learning-url';
+import { modalities } from '@/lib/site';
+import { about, advocacy, consulting, contact, staffing } from '@/routes';
 
 const contactStaffing = contact({ query: { topic: 'staffing' } });
 
@@ -43,7 +40,7 @@ const services = [
         description:
             'Designed for working technologists, our flexible and affordable program helps you earn your CT certification and take your career to the next level.',
         image: '/images/about-learning.jpg',
-        href: ctProgram(),
+        learningPath: ctProgramPath,
         icon: GraduationCap,
     },
     {
@@ -99,6 +96,8 @@ const stats = [
 ];
 
 export default function Home() {
+    const learningUrl = useInfiniteLearningUrl();
+
     return (
         <>
             {/* Hero */}
@@ -138,7 +137,7 @@ export default function Home() {
                                 <ArrowRight />
                             </ButtonLink>
                             <ButtonLink
-                                href={ctProgram()}
+                                href={learningUrl(ctProgramPath)}
                                 size="lg"
                                 variant="ghostLight"
                             >
@@ -215,9 +214,13 @@ export default function Home() {
 
                     <div className="mt-14 grid gap-6 md:grid-cols-2">
                         {services.map((service) => (
-                            <Link
+                            <SiteLink
                                 key={service.title}
-                                href={service.href}
+                                href={
+                                    'learningPath' in service
+                                        ? learningUrl(service.learningPath)
+                                        : service.href
+                                }
                                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-2xl hover:shadow-brand-500/10 sm:flex-row"
                             >
                                 <div className="relative h-56 shrink-0 overflow-hidden sm:h-auto sm:w-2/5">
@@ -243,7 +246,7 @@ export default function Home() {
                                         <ArrowRight className="size-4 transition group-hover:translate-x-1" />
                                     </span>
                                 </div>
-                            </Link>
+                            </SiteLink>
                         ))}
                     </div>
                 </Container>
@@ -347,7 +350,10 @@ export default function Home() {
                             credential.
                         </p>
                         <div className="mt-8 flex flex-wrap gap-3">
-                            <ButtonLink href={ctProgram()} variant="light">
+                            <ButtonLink
+                                href={learningUrl(ctProgramPath)}
+                                variant="light"
+                            >
                                 CT Certification Program
                             </ButtonLink>
                         </div>
