@@ -4,7 +4,10 @@ import ButtonLink from '@/components/site/button-link';
 import Container from '@/components/site/container';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
-import { ctProgram } from '@/routes';
+import {
+    ctProgramPath,
+    useInfiniteLearningUrl,
+} from '@/hooks/use-infinite-learning-url';
 import { ctConnectionJuly2026 } from '@/routes/newsletters';
 
 const issues = [
@@ -18,6 +21,8 @@ const issues = [
 ];
 
 export default function Newsletter() {
+    const learningUrl = useInfiniteLearningUrl();
+
     const [latestIssue] = issues;
 
     return (
@@ -98,7 +103,10 @@ export default function Newsletter() {
                             training, student support and enrollment
                             requirements.
                         </p>
-                        <ButtonLink href={ctProgram()} className="mt-8">
+                        <ButtonLink
+                            href={learningUrl(ctProgramPath)}
+                            className="mt-8"
+                        >
                             Explore the CT Program
                         </ButtonLink>
                     </div>

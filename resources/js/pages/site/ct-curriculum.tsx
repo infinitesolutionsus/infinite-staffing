@@ -5,8 +5,11 @@ import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
-import { useEnrollUrl } from '@/hooks/use-enroll-url';
-import { ctProgram } from '@/routes';
+import {
+    ctProgramPath,
+    useEnrollUrl,
+    useInfiniteLearningUrl,
+} from '@/hooks/use-infinite-learning-url';
 
 const institutionalOutcomes = [
     {
@@ -167,6 +170,7 @@ const arrtResources = [
 
 export default function CtCurriculum() {
     const enrollHref = useEnrollUrl()('complete-ct-program');
+    const learningUrl = useInfiniteLearningUrl();
 
     return (
         <>
@@ -180,7 +184,11 @@ export default function CtCurriculum() {
                     Enroll — $1,995
                     <ArrowRight />
                 </ButtonLink>
-                <ButtonLink href={ctProgram()} size="lg" variant="ghostLight">
+                <ButtonLink
+                    href={learningUrl(ctProgramPath)}
+                    size="lg"
+                    variant="ghostLight"
+                >
                     Program overview
                 </ButtonLink>
             </PageHero>

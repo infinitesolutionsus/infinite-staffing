@@ -14,7 +14,7 @@ import Container from '@/components/site/container';
 import CtaSection from '@/components/site/cta-section';
 import PageHero from '@/components/site/page-hero';
 import SectionHeading from '@/components/site/section-heading';
-import { useEnrollUrl } from '@/hooks/use-enroll-url';
+import { useEnrollUrl } from '@/hooks/use-infinite-learning-url';
 import { cn } from '@/lib/utils';
 import { contact, newsletter } from '@/routes';
 import { curriculum } from '@/routes/ct-program';
